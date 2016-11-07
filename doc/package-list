@@ -1,0 +1,8 @@
+com.mindtree.controller
+com.mindtree.dao
+com.mindtree.dto
+com.mindtree.entity
+com.mindtree.exceptions
+com.mindtree.service
+com.mindtree.test
+com.mindtree.util
