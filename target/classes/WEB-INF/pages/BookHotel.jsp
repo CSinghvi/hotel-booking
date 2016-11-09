@@ -49,12 +49,14 @@ Hotel :<select id="demo" name="hotel">
 </div>
 
 <br>
-  <p>check-in Date :<input type="date" name="Check_in" ></p>
+  <p>check-in Date :<input type="date" name="check_in" ></p>
  
  <br>
-  <p>check-out Date :<input type="date" name="Check_out" ></p>      
+  <p>check-out Date :<input type="date" name="check_out" ></p>      
+   
    	
-	
+<br>
+<p>Number of rooms : <input type="number" name="rooms"></p>	
 	
 	<br><br> <input type="submit" value="Submit">  
 	 <a href="index.jsp"><button type="button">cancel</button></a> 

@@ -9,27 +9,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mindtree.entity.Hotel;
-import com.mindtree.dto.LoginDetails;
-import com.mindtree.dto.ReservationDetails;
+import com.mindtree.dto.HotelBookingDto;
 import com.mindtree.entity.BookingDetail;
-import com.mindtree.entity.Customer;
+import com.mindtree.entity.Hotel;
 import com.mindtree.exceptions.HotelReservationException;
 import com.mindtree.service.HotelReserveService;
 import com.mindtree.util.LoginValidator;
@@ -45,8 +37,15 @@ import com.mindtree.util.Validations;
 public class HotelReservationControlller {
 	@Autowired
 	HotelReserveService hotelReserveService;
-	public void setSer(HotelReserveService ser) {
-		this.hotelReserveService= ser;
+
+
+	public HotelReserveService getHotelReserveService() {
+		return hotelReserveService;
+	}
+
+
+	public void setHotelReserveService(HotelReserveService hotelReserveService) {
+		this.hotelReserveService = hotelReserveService;
 	}
 
 	Validations validation=new Validations();
@@ -91,19 +90,34 @@ public class HotelReservationControlller {
 		@RequestMapping(method=RequestMethod.POST,value="/login.view")
 	public String login(HttpServletRequest request,HttpServletResponse response,  Model model) throws HotelReservationException {
 			
-			
+			int rooms=Integer.parseInt(request.getParameter("rooms"));
 			String checkIn=request.getParameter("check_in");		
-	String checkout=request.getParameter("check_out");
-	String hotelname=request.getParameter("hotel");
-		System.out.println("Checking hotel "+hotelname);
+			String checkOut=request.getParameter("check_out");
+			int hotelId=Integer.parseInt(request.getParameter("hotel"));
+			System.out.println("Checking hotel "+checkIn);
+		
+		HotelBookingDto bookingDetails=new HotelBookingDto();
+		 bookingDetails.setCheckIn(checkIn);
+		 bookingDetails.setCheckOut(checkOut);
+		 bookingDetails.setHotelId(hotelId);
+		 bookingDetails.setRooms(rooms);
+		 
+		 System.out.println(bookingDetails);
+		 
+		 List<BookingDetail> reserveList=hotelReserveService.returnResults(checkIn, checkOut, hotelId, rooms);
 		
 //			loginValidator.validate(loginform,result);
 //		if(result.hasErrors())
 //		{				
 //			model.addAttribute("details",det);
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			Date day=new Date();
+			String date=dateFormat.format(day);
 			
-			
-			return "index";
+		 model.addAttribute("reserveList",reserveList);
+		 model.addAttribute("date",date);
+		 
+		 return "ResevationInformation";
 		}
 
 	

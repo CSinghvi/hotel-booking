@@ -7,21 +7,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 
 import com.mindtree.dao.HotelReserveDao;
-import com.mindtree.dto.LoginDetails;
-import com.mindtree.dto.ReservationDetails;
 import com.mindtree.entity.BookingDetail;
-import com.mindtree.entity.Customer;
 import com.mindtree.entity.Hotel;
 import com.mindtree.exceptions.HotelReservationException;
-import com.mindtree.util.DatabaseUtil;
 
 /**
  * @author M1035998
@@ -64,12 +55,12 @@ public class HotelReserveServiceImpl implements HotelReserveService {
 		
 	}
 	
-	@Transactional
-		public List<Customer> getLoginDetails(LoginDetails loginform) {
-			System.out.println("reaching service");
-			List<Customer> custDetails=hotelReserveDao.getLoginDetails(loginform);
-			return custDetails;
-		}
+//	@Transactional
+//		public List<Customer> getLoginDetails(LoginDetails loginform) {
+//			System.out.println("reaching service");
+//			List<Customer> custDetails=hotelReserveDao.getLoginDetails(loginform);
+//			return custDetails;
+//		}
 
 	@Transactional
 		public List<Hotel> getHotel(String city) throws HotelReservationException {
@@ -80,8 +71,8 @@ public class HotelReserveServiceImpl implements HotelReserveService {
 
 	
 	@Transactional
-		public List<BookingDetail> returnResults(String checkIn, String checkOut, int hotelid, String email) {
-			List<BookingDetail> reserveList= hotelReserveDao.returnResults(checkIn,checkOut,hotelid,email);
+		public List<BookingDetail> returnResults(String checkIn, String checkOut, int hotelid, int rooms) {
+			List<BookingDetail> reserveList= hotelReserveDao.returnResults(checkIn,checkOut,hotelid,rooms);
 			System.out.println("in service........"+reserveList);
 			return reserveList;
 		}

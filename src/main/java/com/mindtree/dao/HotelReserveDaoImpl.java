@@ -9,16 +9,10 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
-import com.mindtree.dto.LoginDetails;
 import com.mindtree.entity.BookingDetail;
-import com.mindtree.entity.Customer;
 import com.mindtree.entity.Hotel;
 import com.mindtree.exceptions.HotelReservationException;
-import com.mindtree.util.DatabaseUtil;
 
 /**
  * @author M1035998
@@ -98,24 +92,24 @@ public class HotelReserveDaoImpl implements HotelReserveDao{
 	}
 	
 
-	public List<Customer> getLoginDetails(LoginDetails loginform) {
-//		Session session=new DatabaseUtil().getSession(); 
-//		Transaction t=new DatabaseUtil().getTransaction(); 
-		System.out.println("reaching dao");
-		String email=loginform.getEmail();
-		System.out.println(loginform.getEmail());
-		String password=loginform.getPassword();
-		System.out.println(loginform.getPassword());
-		Session session=sessionFactory.openSession();
-		System.out.println("gonna excecute the Query");
-		@SuppressWarnings("unchecked")
-		List<Customer> custDetails=session.createQuery("FROM Customer c where c.email='"+email+"' AND c.password='"+password+"'").list();
-//		t.commit();
-//		sessionFactory.getCurrentSession().close();
-		System.out.println(custDetails);
-		System.out.println("successfully retrived customer details"); 
-		return custDetails;
-	}
+//	public List<Customer> getLoginDetails(LoginDetails loginform) {
+////		Session session=new DatabaseUtil().getSession(); 
+////		Transaction t=new DatabaseUtil().getTransaction(); 
+//		System.out.println("reaching dao");
+//		String email=loginform.getEmail();
+//		System.out.println(loginform.getEmail());
+//		String password=loginform.getPassword();
+//		System.out.println(loginform.getPassword());
+//		Session session=sessionFactory.openSession();
+//		System.out.println("gonna excecute the Query");
+//		@SuppressWarnings("unchecked")
+//		List<Customer> custDetails=session.createQuery("FROM Customer c where c.email='"+email+"' AND c.password='"+password+"'").list();
+////		t.commit();
+////		sessionFactory.getCurrentSession().close();
+//		System.out.println(custDetails);
+//		System.out.println("successfully retrived customer details"); 
+//		return custDetails;
+//	}
 
 	public List<Hotel> getHotelNameFromDB1(String city) {
 //		Session session=new DatabaseUtil().getSession(); 
@@ -130,30 +124,36 @@ public class HotelReserveDaoImpl implements HotelReserveDao{
 	}
 
 
-	public List<BookingDetail> returnResults(String checkIn, String checkOut, int hotelid, String email) {
+	public List<BookingDetail> returnResults(String checkIn, String checkOut, int hotelid, int rooms) {
 //		Session session=new DatabaseUtil().getSession(); 
 //		Transaction t=new DatabaseUtil().getTransaction(); 
-		System.out.println("checking for email"+email);
+		//System.out.println("checking for email"+email);
 		Session session=sessionFactory.openSession();
 		Hotel hotel=(Hotel) session.createQuery("FROM Hotel h where h.hotelId="+hotelid).uniqueResult();
 
-		Customer customer=(Customer) session.createQuery("FROM Customer c where c.email='"+email+"'").uniqueResult();
+		//Customer customer=(Customer) session.createQuery("FROM Customer c where c.email='"+email+"'").uniqueResult();
 
-		System.out.println("checking customer is printing or not"+customer);
+		//System.out.println("checking customer is printing or not"+customer);
 
 		BookingDetail book=new BookingDetail();
 		book.setCheckIn(checkIn);
 		book.setCheckOut(checkOut);
 		book.setHotel(hotel);
-		book.setCust(customer);
+		//book.setCust(customer);
 		session.save(book);
 
 		
 		@SuppressWarnings("unused")
 		String cityState=hotel.getCity()+","+hotel.getState();
 		@SuppressWarnings("unchecked")
-		List<BookingDetail> bookingDetail=session.createQuery("FROM BookingDetail b where b.cust.customerId='"+customer.getCustomerId()+"'").list();
-	
+//		List<BookingDetail> bookingDetail=session.createQuery("Select ff.confirmationNumber FROM BookingDetail as ff").list();
+		List<BookingDetail> bookingDetail=session.createQuery("FROM  BookingDetail f "
+								+"where f.confirmationNumber=(select max(ff.confirmationNumber) from BookingDetail ff )").list();
+//	List<BookingDetail> bookingDetail=session.createQuery("FROM  BookingDetail as f "
+//			+"where f.confirmationNumber=1").list();
+		
+		
+		
 //		t.commit();
 //		sessionFactory.getCurrentSession().close();
 		return bookingDetail;

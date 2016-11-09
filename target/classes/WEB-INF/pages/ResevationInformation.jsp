@@ -19,29 +19,43 @@ padding:10px;
 </head>
 <body>
 
-Current Hotel bookings as on &nbsp; <c:out value="${date}"></c:out>
+Booked on &nbsp; <c:out value="${date}"></c:out>
 <br><br><br>
-<table border="1" style="padding:2px; ">
-<tr>
-<th>Hotel Name</th>
-<th>Address</th>
-<th>City,State</th>
-<th>Check in Date</th>
-<th>Check Out Date</th>
-<th>Confirmation number</th>
-</tr>
-</table>
+<!-- <table border="1" style="padding:2px; "> -->
+<!-- <tr> -->
+<!-- <th>Hotel Name</th> -->
+<!-- <th>Address</th> -->
+<!-- <th>City,State</th> -->
+<!-- <th>Check in Date</th> -->
+<!-- <th>Check Out Date</th> -->
+<!-- <th>Confirmation number</th> -->
+<!-- </tr> -->
+<!-- </table> -->
 <c:forEach items="${reserveList}" var="list">
-<table border="1" style="padding:2px; ">
-<tr>
-<td><c:out value="${list.getHotel().getHotelName()}"></c:out></td>
-<td><c:out value="${list.getHotel().getAddress()}"></c:out></td>
-<td>${list.getHotel().getCity()},${list.getHotel().getState()}</td>
-<td><c:out value="${list.getCheckIn()}"></c:out></td>
-<td><c:out value="${list.getCheckOut()}"></c:out></td>
-<td><c:out value="${list.getConfirmationNumber()}"></c:out></td>
-</tr>
+<!-- <table border="1" style="padding:2px; "> -->
+<!-- <tr> -->
+<%-- <td><c:out value="${list.getHotel().getHotelName()}"></c:out></td> --%>
+<%-- <td><c:out value="${list.getHotel().getAddress()}"></c:out></td> --%>
+<%-- <td>${list.getHotel().getCity()},${list.getHotel().getState()}</td> --%>
+<%-- <td><c:out value="${list.getCheckIn()}"></c:out></td> --%>
+<%-- <td><c:out value="${list.getCheckOut()}"></c:out></td> --%>
+<%-- <td><c:out value="${list.getConfirmationNumber()}"></c:out></td> --%>
+<%-- <td><c:out value="${list.getHotel().getRate()}"></c:out></td> --%>
+<!-- </tr> -->
+<!-- </table> -->
+
+Your Hotel Booking order id is &nbsp; <c:out value="${list.getConfirmationNumber()}"></c:out>
+<br><br><br>
+Amount Payable is INR :<c:out value="${list.getHotel().getRate()}"></c:out>
+<br><br>
+<table style="padding:2px; ">
+<tr><td>Hotel Name</td><td>:<c:out value="${list.getHotel().getHotelName()}"></c:out></td></tr>
+<tr><td>Address</td><td>:<c:out value="${list.getHotel().getAddress()},${list.getHotel().getCity()},${list.getHotel().getState()}"></c:out></td></tr>
+<tr><td>Check in Date</td><td>:<c:out value="${list.getCheckIn()}"></c:out></td></tr>
+<tr><td>Check out Date</td><td>:<c:out value="${list.getCheckOut()}"></c:out></td></tr>
 </table>
+
+
 <%-- Email : <c:out value="${list.getEmail()}"></c:out> --%>
 </c:forEach>
 </body>

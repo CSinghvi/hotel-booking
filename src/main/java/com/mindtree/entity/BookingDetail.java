@@ -64,18 +64,7 @@ public class BookingDetail {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
-	/**
-	 * @return the cust
-	 */
-	public Customer getCust() {
-		return cust;
-	}
-	/**
-	 * @param cust the cust to set
-	 */
-	public void setCust(Customer cust) {
-		this.cust = cust;
-	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -91,13 +80,13 @@ public class BookingDetail {
 	 * @param hotel
 	 * @param cust
 	 */
-	public BookingDetail(int confirmationNumber, String checkIn, String checkOut, Hotel hotel, Customer cust) {
+	public BookingDetail(int confirmationNumber, String checkIn, String checkOut, Hotel hotel) {
 		super();
 		this.confirmationNumber = confirmationNumber;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.hotel = hotel;
-		this.cust = cust;
+//		this.cust = cust;
 	}
 /**
 	 * 
@@ -117,7 +106,7 @@ String checkOut;
 @ManyToOne
 @JoinColumn(name = "hotel_id")
 Hotel hotel;
-@ManyToOne
-@JoinColumn(name = "cust_id")
-Customer cust;
+//@ManyToOne
+//@JoinColumn(name = "cust_id")
+//Customer cust;
 }

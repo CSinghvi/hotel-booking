@@ -13,32 +13,15 @@ rate float not null,
 rooms int,
 occupied int);
 
-create table customer (
-cust_id int primary key auto_increment not null,
-cust_name varchar(30) not null,
-email varchar(50) not null,
-pass varchar(30) not null);
 
 create table booking_details (
 confirmation_no int primary key auto_increment not null,
 check_in varchar(30) not null,
 check_out varchar(30) not null,
 hotel_id int not null,
-cust_id int not null,
-FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id),
-FOREIGN KEY (cust_id) REFERENCES customer(cust_id));
+FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id));
 
 
-delimiter //
-drop procedure if exists insert_customer //
-create procedure insert_customer()
-begin
-Insert into customer (cust_name, email, pass)
-Values('chirayu', 'chirayus222@gmail.com', '12345');
-end
-//
-delimiter ;
-call insert_customer();
 
 delimiter //
 drop procedure if exists insert_hotels //

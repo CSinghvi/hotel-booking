@@ -39,7 +39,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
               <property name="annotatedClasses">
                      <list>
                             <value>com.mindtree.entity.BookingDetail</value>
-                            <value>com.mindtree.entity.Customer</value>
+<!--                             <value>com.mindtree.entity.Customer</value> -->
                               <value>com.mindtree.entity.Hotel</value>
                      </list>
               </property>
