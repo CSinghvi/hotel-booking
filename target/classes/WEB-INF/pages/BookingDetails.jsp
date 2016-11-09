@@ -24,8 +24,7 @@
 
 
 <form:form action="placeOrder.view?hotelid=${info.getHotelId()}&email=${custDetails.get(0).getEmail()}"  method="post" commandName="reservationDetails">
-<div style="position: fixed;left:400px;border:thick;height:400px;width:600px;top:50px;   ">
-
+<div style="position: fixed;left:400px;border:thick;height:400px;width:600px;top:50px;">
 <c:forEach items="${custDetails}" var="list">
 Email : <c:out value="${list.getEmail()}"></c:out>
 </c:forEach>

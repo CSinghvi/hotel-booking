@@ -73,7 +73,7 @@ public class HotelReserveServiceImpl implements HotelReserveService {
 
 	@Transactional
 		public List<Hotel> getHotel(String city) throws HotelReservationException {
-			List<Hotel> hotelDetails=hotelReserveDao.getHotelNameFromDB(city);
+			List<Hotel> hotelDetails=hotelReserveDao.getHotelNameFromDB1(city);
 			return hotelDetails;
 			
 		}

@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,144 +52,144 @@ public class HotelReservationControlller {
 	Validations validation=new Validations();
 	LoginValidator loginValidator=new  LoginValidator();
 	
-//	@RequestMapping(method=RequestMethod.GET,value="/search.view")
-//	public String goToSearchPage()throws IOException,ServletException{
-//		
-//		return "SearchHotel";
-//	}	
 	
 	@RequestMapping(method=RequestMethod.GET,value="/fetch.view")
 	public String addQuestionnaire(Model model,HttpServletRequest request) throws HotelReservationException {
+		System.out.println("yaha p toh aa rha H");
 		String search=request.getParameter("name");
 		List<Hotel> hotelDetails=hotelReserveService.searchHotel(search);
 		model.addAttribute("hotelDetails",hotelDetails);
+		System.out.println("YHA BHI AA RHA H");
 		return "BookHotel";
 		}
 	
+
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET,value="/viewHotel.view")
-		public String viewHotels(@RequestParam String city,Model model,HttpServletRequest request) throws HotelReservationException {
-	
-//	Customer loginForm=new Customer();
-//	model.addAttribute("loginform",loginForm);
+	@RequestMapping(method=RequestMethod.GET,value="/getHotelName.view")
+	public String printhotelname(Model model,HttpServletRequest request,HttpServletResponse response) throws HotelReservationException, IOException {
+		System.out.println("idhar to aa gaya");
+		 String city=request.getParameter("list");
+		 System.out.println("city name"+city);
+			List<Hotel> hotelDetails=hotelReserveService.getHotel(city);
+			model.addAttribute("hotelDetails",hotelDetails);
+			System.out.println(hotelDetails.get(0).getHotelName());
+					
+			//"Hotel: <select id='mySelect' name='city'>" 
+			
+			String details= "<option   id=0   value='0' name='hotel'  >Select</option>";
+			
+			for(int i=0;i<hotelDetails.size();i++)
+			{
+				details=details+"<option   id="+i+"   value="+hotelDetails.get(i).getHotelId()+" name='hotel' >"+hotelDetails.get(i).getHotelName()+"</option>";
+			}
 		
+						
+			
+		return details;
+		}
+
+		@RequestMapping(method=RequestMethod.POST,value="/login.view")
+	public String login(HttpServletRequest request,HttpServletResponse response,  Model model) throws HotelReservationException {
+			
+			
+			String checkIn=request.getParameter("check_in");		
+	String checkout=request.getParameter("check_out");
+	String hotelname=request.getParameter("hotel");
+		System.out.println("Checking hotel "+hotelname);
 		
-		List<Hotel> hotelDetails=hotelReserveService.getHotel(city);
-		
-		model.addAttribute("hotelDetails",hotelDetails);
-		
-		
-//		int id=hotelDetails.get(0).getHotelId();
-//	String details1="<h1>"+hotelDetails.get(0).getHotelName()+"</h1><br><br>"+hotelDetails.get(0).getAddress()
-//			+ ","+hotelDetails.get(0).getZip()+"<br>"+hotelDetails.get(0).getCity()+"<br><br>"+hotelDetails.get(0).getRate()
-//			+"<br><button  id='myBtn'><a href=check.view?details="+id+">Book Hotel</a></button></div>";
-	
-	String details= "Hotel: <select id='mySelect' name='city'>" 
-					+"<option   id=0   value='0'  >Select</option>"
-					+"	<c:forEach items='${hotelDetails}' var='hotelname'>"
-					+"<option   id=2   value='${hotelname}'  >"
-					+"<c:out value='${hotelname.getHotelName()}' />"
-					+"</option>"
-					+"</c:forEach>"
-					+"</select>";
+//			loginValidator.validate(loginform,result);
+//		if(result.hasErrors())
+//		{				
+//			model.addAttribute("details",det);
+			
+			
+			return "index";
+		}
 
 	
-	String test="hello";
 	
 	
 	
-//	+hotelDetails.get(0).getHotelId()
-	System.out.println(details);
-		return test;
-		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static String det;
-	
-	@RequestMapping(method=RequestMethod.GET,value="/check.view")
-	public String gotoLoginPage( Model model,HttpServletRequest request) throws HotelReservationException {
-		//String search=request.getParameter("name");
-		 det=request.getParameter("details");
-		LoginDetails loginForm=new LoginDetails();
-		model.addAttribute("loginform",loginForm);
-		model.addAttribute("details",det);
-		return "LoginPage";
-		}
-	
-	public static List<Customer> custDetails1;
-	public static List<Hotel> hotelDetails1;
-	
-	@RequestMapping(method=RequestMethod.POST,value="/login.view")
-	public String login(@Valid @ModelAttribute("loginform") LoginDetails loginform,BindingResult result,@RequestParam int hotelid,  Model model) throws HotelReservationException {
-	
-		loginValidator.validate(loginform,result);
-		
-		if(result.hasErrors())
-		{
-				
-//			LoginDetails loginForm=new LoginDetails();
-//			model.addAttribute("loginform",loginForm);
-			model.addAttribute("details",det);
-			return "LoginPage";
-		}
-		
-		custDetails1=hotelReserveService.getLoginDetails(loginform);
-System.out.println("login me "+hotelid);
-ReservationDetails reservationDetails=new ReservationDetails();
-		System.out.println("in controller checking detAILS for login detils from jsp"+loginform.getEmail()+" &  "+loginform.getPassword());
-		//hotelDetails1=hotelReserveService.getHotel(hotelid);
-		//System.out.println("in login.view "+hotelDetails1);
-		System.out.println("back in controller "+custDetails1.get(0).getEmail());
-		System.out.println("in login view"+loginform);
-		System.out.println("Now its gonna compare pass and email");
-//		System.out.println("along with cust checkin hotel details "+hotelid);
-		if(loginform.getEmail().equals(custDetails1.get(0).getEmail())  && loginform.getPassword().equals(custDetails1.get(0).getPassword()))
-		{
-			System.out.println("email matched");
-			model.addAttribute("custDetails",custDetails1);
-		model.addAttribute("hotelDetails1",hotelDetails1);
-		model.addAttribute("reservationDetails",reservationDetails);
-			return "BookingDetails";
-		}
-		else
-		{
-			System.out.println("email or pass not matched");
-			model.addAttribute("errmsg","Invalid Login Details!!!");
-			return "LoginPage";
-		}	
-	}
-	
-	@RequestMapping(method=RequestMethod.POST,value="/placeOrder.view")
-	public String returnResults(@Valid @ModelAttribute("reservationDetails") ReservationDetails reservationDetails ,BindingResult bindingResult ,@RequestParam int hotelid,@RequestParam String email,Model model,HttpServletRequest request) throws HotelReservationException {
-		DateFormat dateFormat = new SimpleDateFormat("dd//MM/yyyy");
-		Date day=new Date();
-		String date=dateFormat.format(day);
-		
-		validation.validate(reservationDetails, bindingResult);
-		if(bindingResult.hasErrors())
-		{
-			model.addAttribute("custDetails",custDetails1);
-			model.addAttribute("hotelDetails1",hotelDetails1);
-			model.addAttribute("reservationDetails",reservationDetails);
-			return "BookingDetails";
-		}
-		
-		String checkIn=reservationDetails.getCheckIn();
-		String checkOut=reservationDetails.getCheckOut();
-		List<BookingDetail> reserveList= hotelReserveService.returnResults(checkIn,checkOut,hotelid,email);
-//		Customer loginForm=new Customer();
-	model.addAttribute("reserveList",reserveList);
-	model.addAttribute("date",date);
-	System.out.println("in contoller........."+reserveList);
-		return "ResevationInformation";
-		}
+//	public static String det;
+//	
+//	@RequestMapping(method=RequestMethod.GET,value="/check.view")
+//	public String gotoLoginPage( Model model,HttpServletRequest request) throws HotelReservationException {
+//		System.out.println("idhar to aa gaya");
+//		//String search=request.getParameter("name");
+//		 det=request.getParameter("details");
+//		LoginDetails loginForm=new LoginDetails();
+//		model.addAttribute("loginform",loginForm);
+//		model.addAttribute("details",det);
+//		return "LoginPage";
+//		}
+//	
+//	public static List<Customer> custDetails1;
+//	public static List<Hotel> hotelDetails1;
+//	
+//	@RequestMapping(method=RequestMethod.POST,value="/login.view")
+//	public String login(@Valid @ModelAttribute("loginform") LoginDetails loginform,BindingResult result,@RequestParam int hotelid,  Model model) throws HotelReservationException {
+//	
+//		loginValidator.validate(loginform,result);
+//		
+//		if(result.hasErrors())
+//		{
+//				
+////			LoginDetails loginForm=new LoginDetails();
+////			model.addAttribute("loginform",loginForm);
+//			model.addAttribute("details",det);
+//			return "LoginPage";
+//		}
+//		
+//		custDetails1=hotelReserveService.getLoginDetails(loginform);
+//System.out.println("login me "+hotelid);
+//ReservationDetails reservationDetails=new ReservationDetails();
+//		System.out.println("in controller checking detAILS for login detils from jsp"+loginform.getEmail()+" &  "+loginform.getPassword());
+//		//hotelDetails1=hotelReserveService.getHotel(hotelid);
+//		//System.out.println("in login.view "+hotelDetails1);
+//		System.out.println("back in controller "+custDetails1.get(0).getEmail());
+//		System.out.println("in login view"+loginform);
+//		System.out.println("Now its gonna compare pass and email");
+////		System.out.println("along with cust checkin hotel details "+hotelid);
+//		if(loginform.getEmail().equals(custDetails1.get(0).getEmail())  && loginform.getPassword().equals(custDetails1.get(0).getPassword()))
+//		{
+//			System.out.println("email matched");
+//			model.addAttribute("custDetails",custDetails1);
+//		model.addAttribute("hotelDetails1",hotelDetails1);
+//		model.addAttribute("reservationDetails",reservationDetails);
+//			return "BookingDetails";
+//		}
+//		else
+//		{
+//			System.out.println("email or pass not matched");
+//			model.addAttribute("errmsg","Invalid Login Details!!!");
+//			return "LoginPage";
+//		}	
+//	}
+//	
+//	@RequestMapping(method=RequestMethod.POST,value="/placeOrder.view")
+//	public String returnResults(@Valid @ModelAttribute("reservationDetails") ReservationDetails reservationDetails ,BindingResult bindingResult ,@RequestParam int hotelid,@RequestParam String email,Model model,HttpServletRequest request) throws HotelReservationException {
+//		DateFormat dateFormat = new SimpleDateFormat("dd//MM/yyyy");
+//		Date day=new Date();
+//		String date=dateFormat.format(day);
+//		
+//		validation.validate(reservationDetails, bindingResult);
+//		if(bindingResult.hasErrors())
+//		{
+//			model.addAttribute("custDetails",custDetails1);
+//			model.addAttribute("hotelDetails1",hotelDetails1);
+//			model.addAttribute("reservationDetails",reservationDetails);
+//			return "BookingDetails";
+//		}
+//		
+//		String checkIn=reservationDetails.getCheckIn();
+//		String checkOut=reservationDetails.getCheckOut();
+//		List<BookingDetail> reserveList= hotelReserveService.returnResults(checkIn,checkOut,hotelid,email);
+////		Customer loginForm=new Customer();
+//	model.addAttribute("reserveList",reserveList);
+//	model.addAttribute("date",date);
+//	System.out.println("in contoller........."+reserveList);
+//		return "ResevationInformation";
+//		}
 	
 	
 }

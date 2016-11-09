@@ -122,7 +122,7 @@ public class HotelReserveDaoImpl implements HotelReserveDao{
 //		Transaction t=new DatabaseUtil().getTransaction(); 
 		Session session=sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<Hotel> hotelDetails=session.createQuery("FROM Hotel h where h.city="+city).list();
+		List<Hotel> hotelDetails=session.createQuery("FROM Hotel h where h.city='"+city+"'").list();
 		System.out.println("in dao from get hotel details function"+hotelDetails);
 //		t.commit();
 //		sessionFactory.getCurrentSession().close();

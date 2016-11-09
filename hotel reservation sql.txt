@@ -1,6 +1,6 @@
-drop database if exists hotel;
-create database hotel;
-use hotel;
+drop database if exists hotel201;
+create database hotel201;
+use hotel201;
 
 create table hotels (
 hotel_id int primary key auto_increment not null,
@@ -9,7 +9,9 @@ address varchar(50) not null,
 city varchar(20) not null,
 state varchar(20),
 zip int,
-rate float not null);
+rate float not null,
+rooms int,
+occupied int);
 
 create table customer (
 cust_id int primary key auto_increment not null,
@@ -42,12 +44,12 @@ delimiter //
 drop procedure if exists insert_hotels //
 create procedure insert_hotels()
 begin
-Insert into hotels (hotel_name,address,city,state,zip,rate)
-values('lake palace', 'bnhfhj ghjhj', 'udaipur', 'rajastan', 313002,4500);
-Insert into hotels (hotel_name,address,city,state,zip,rate)
-values('udai vilas', 'bnhfhj ghjhj mbh', 'udaipur', 'rajastan', 313002,5500);
-Insert into hotels (hotel_name,address,city,state,zip,rate)
-values('pelican', 'bnhfhj ghjkjjhj', 'jodhpur', 'punjab', 313003,3500);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms,occupied)
+values('lake palace', 'bnhfhj ghjhj', 'udaipur', 'rajastan', 313002,4500,10,0);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms,occupied)
+values('udai vilas', 'bnhfhj ghjhj mbh', 'udaipur', 'rajastan', 313002,5500,12,0);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms,occupied)
+values('pelican', 'bnhfhj ghjkjjhj', 'jodhpur', 'punjab', 313003,3500,14,0);
 end
 //
 delimiter ;
