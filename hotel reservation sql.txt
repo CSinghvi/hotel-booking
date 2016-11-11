@@ -10,8 +10,7 @@ city varchar(20) not null,
 state varchar(20),
 zip int,
 rate float not null,
-rooms int,
-occupied int);
+rooms int);
 
 
 create table booking_details (
@@ -19,7 +18,8 @@ confirmation_no int primary key auto_increment not null,
 check_in varchar(30) not null,
 check_out varchar(30) not null,
 hotel_id int not null,
-FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id));
+FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id),
+occupied int);
 
 
 
@@ -27,12 +27,12 @@ delimiter //
 drop procedure if exists insert_hotels //
 create procedure insert_hotels()
 begin
-Insert into hotels (hotel_name,address,city,state,zip,rate,rooms,occupied)
-values('lake palace', 'bnhfhj ghjhj', 'udaipur', 'rajastan', 313002,4500,10,0);
-Insert into hotels (hotel_name,address,city,state,zip,rate,rooms,occupied)
-values('udai vilas', 'bnhfhj ghjhj mbh', 'udaipur', 'rajastan', 313002,5500,12,0);
-Insert into hotels (hotel_name,address,city,state,zip,rate,rooms,occupied)
-values('pelican', 'bnhfhj ghjkjjhj', 'jodhpur', 'punjab', 313003,3500,14,0);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('lake palace', 'bnhfhj ghjhj', 'udaipur', 'rajastan', 313002,4500,10);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('udai vilas', 'bnhfhj ghjhj mbh', 'udaipur', 'rajastan', 313002,5500,12);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('pelican', 'bnhfhj ghjkjjhj', 'jodhpur', 'punjab', 313003,3500,14);
 end
 //
 delimiter ;

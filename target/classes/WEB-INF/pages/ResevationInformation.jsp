@@ -49,6 +49,7 @@ Your Hotel Booking order id is &nbsp; <c:out value="${list.getConfirmationNumber
 Amount Payable is INR :<c:out value="${list.getHotel().getRate()}"></c:out>
 <br><br>
 <table style="padding:2px; ">
+<tr><td>Number of rooms Booked</td><td>:<c:out value="${list.getOccupied()}"></c:out></td></tr>
 <tr><td>Hotel Name</td><td>:<c:out value="${list.getHotel().getHotelName()}"></c:out></td></tr>
 <tr><td>Address</td><td>:<c:out value="${list.getHotel().getAddress()},${list.getHotel().getCity()},${list.getHotel().getState()}"></c:out></td></tr>
 <tr><td>Check in Date</td><td>:<c:out value="${list.getCheckIn()}"></c:out></td></tr>

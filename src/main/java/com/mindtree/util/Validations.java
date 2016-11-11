@@ -16,6 +16,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.mindtree.controller.HotelReservationControlller;
 import com.mindtree.dto.ReservationDetails;
 import com.mindtree.service.HotelReserveServiceImpl;
 
@@ -39,11 +40,14 @@ public class Validations implements Validator {
 	}
 	public void validate(Object target, Errors errors) {
 
+	int available=HotelReservationControlller.available;
 		
-		
-
 	
 	ReservationDetails data=(ReservationDetails) target;
+	
+	System.out.println(data.getCheckIn());
+	System.out.println(data.getCheckOut());
+	
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	 
@@ -53,6 +57,11 @@ public class Validations implements Validator {
 
 	}
 	 
+	if(data.getRoom()>available)
+	{
+		errors.rejectValue("room","room.incorrect", "Rooms not available, only "+available+"are available");
+	}
+	
 	 
 	 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		Date day=new Date();
@@ -100,7 +109,7 @@ public class Validations implements Validator {
 			}
 			
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 
@@ -114,6 +123,7 @@ public class Validations implements Validator {
 			}
 		
 	}
+
 	
 	
 }

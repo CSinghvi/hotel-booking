@@ -10,6 +10,7 @@ import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.mindtree.dto.ReservationDetails;
 import com.mindtree.entity.BookingDetail;
 import com.mindtree.entity.Hotel;
 import com.mindtree.exceptions.HotelReservationException;
@@ -123,12 +124,33 @@ public class HotelReserveDaoImpl implements HotelReserveDao{
 		return hotelDetails;
 	}
 
+	
+	public List<BookingDetail> getOccupancy(ReservationDetails reservationDetail) {
+		Session session=sessionFactory.openSession();
+		List<BookingDetail> bookingDetail=session.createQuery("FROM  BookingDetail f where f.hotel.hotelId="+reservationDetail.getHotelId()).list();
+		
+		return bookingDetail;
+		
+	}
+	
 
-	public List<BookingDetail> returnResults(String checkIn, String checkOut, int hotelid, int rooms) {
+	public List<BookingDetail> returnResults(ReservationDetails reservationDetail) {
 //		Session session=new DatabaseUtil().getSession(); 
 //		Transaction t=new DatabaseUtil().getTransaction(); 
 		//System.out.println("checking for email"+email);
+		int hotelid=reservationDetail.getHotelId();
+		
+		
 		Session session=sessionFactory.openSession();
+		
+//		Hotel insertHotelRooms=new Hotel();
+//		insertHotelRooms.setOccupied(reservationDetail.getRoom());
+//		session.update(insertHotelRooms);
+//		
+//		Hotel insertHotelRooms = (Hotel) session.load(Hotel.class, hotelid);
+//		insertHotelRooms.setOccupied(reservationDetail.getRoom());
+//		session.merge(insertHotelRooms);
+		
 		Hotel hotel=(Hotel) session.createQuery("FROM Hotel h where h.hotelId="+hotelid).uniqueResult();
 
 		//Customer customer=(Customer) session.createQuery("FROM Customer c where c.email='"+email+"'").uniqueResult();
@@ -136,8 +158,9 @@ public class HotelReserveDaoImpl implements HotelReserveDao{
 		//System.out.println("checking customer is printing or not"+customer);
 
 		BookingDetail book=new BookingDetail();
-		book.setCheckIn(checkIn);
-		book.setCheckOut(checkOut);
+		book.setCheckIn(reservationDetail.getCheckIn());
+		book.setCheckOut(reservationDetail.getCheckOut());
+		book.setOccupied(reservationDetail.getRoom());
 		book.setHotel(hotel);
 		//book.setCust(customer);
 		session.save(book);

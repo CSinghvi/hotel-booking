@@ -7,9 +7,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mindtree.dao.HotelReserveDao;
+import com.mindtree.dto.ReservationDetails;
 import com.mindtree.entity.BookingDetail;
 import com.mindtree.entity.Hotel;
 import com.mindtree.exceptions.HotelReservationException;
@@ -69,12 +71,22 @@ public class HotelReserveServiceImpl implements HotelReserveService {
 			
 		}
 
+	@Transactional
+	public List<BookingDetail> getOccupancy(ReservationDetails reservationDetail) {
+		
+		List<BookingDetail> bookingDetail=hotelReserveDao.getOccupancy(reservationDetail);
+		
+		return bookingDetail;
+	
+	}
 	
 	@Transactional
-		public List<BookingDetail> returnResults(String checkIn, String checkOut, int hotelid, int rooms) {
-			List<BookingDetail> reserveList= hotelReserveDao.returnResults(checkIn,checkOut,hotelid,rooms);
+		public List<BookingDetail> returnResults(ReservationDetails reservationDetail) {
+			List<BookingDetail> reserveList= hotelReserveDao.returnResults(reservationDetail);
 			System.out.println("in service........"+reserveList);
 			return reserveList;
 		}
+	
+	
 
 }

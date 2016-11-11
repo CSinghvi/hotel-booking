@@ -22,149 +22,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="hotels")
 public class Hotel {
-/**
-	 * @return the hotelId
-	 */
-	public int getHotelId() {
-		return hotelId;
-	}
-
-	/**
-	 * @param hotelId the hotelId to set
-	 */
-	public void setHotelId(int hotelId) {
-		this.hotelId = hotelId;
-	}
-
-	/**
-	 * @return the hotelName
-	 */
-	public String getHotelName() {
-		return hotelName;
-	}
-
-	/**
-	 * @param hotelName the hotelName to set
-	 */
-	public void setHotelName(String hotelName) {
-		this.hotelName = hotelName;
-	}
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
-	 * @return the city
-	 */
-	public String getCity() {
-		return city;
-	}
-
-	/**
-	 * @param city the city to set
-	 */
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return state;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	/**
-	 * @return the zip
-	 */
-	public int getZip() {
-		return zip;
-	}
-
-	/**
-	 * @param zip the zip to set
-	 */
-	public void setZip(int zip) {
-		this.zip = zip;
-	}
-
-	/**
-	 * @return the rate
-	 */
-	public double getRate() {
-		return rate;
-	}
-
-	/**
-	 * @param rate the rate to set
-	 */
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-
-	/**
-	 * @return the booking
-	 */
-	public Set<BookingDetail> getBooking() {
-		return booking;
-	}
-
-	/**
-	 * @param booking the booking to set
-	 */
-	public void setBooking(Set<BookingDetail> booking) {
-		this.booking = booking;
-	}
-
-//	/* (non-Javadoc)
-//	 * @see java.lang.Object#toString()
-//	 */
-//	@Override
-//	public String toString() {
-//		return "Hotel [hotelId=" + hotelId + ", hotelName=" + hotelName + ", address=" + address + ", city=" + city
-//				+ ", state=" + state + ", zip=" + zip + ", rate=" + rate + ", booking=" + booking + "]";
-//	}
-
-/**
-	 * @param hotelId
-	 * @param hotelName
-	 * @param address
-	 * @param city
-	 * @param state
-	 * @param zip
-	 * @param rate
-	 * @param booking
-	 */
-	public Hotel(int hotelId, String hotelName, String address, String city, String state, int zip, double rate,
-			Set<BookingDetail> booking) {
-		super();
-		this.hotelId = hotelId;
-		this.hotelName = hotelName;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.rate = rate;
-		this.booking = booking;
-	}
 
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -192,18 +49,93 @@ double rate;
 @Column(name="rooms")
 int rooms;
 
-@Column(name="occupied")
-int occupied;
-
-
-@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-Set<BookingDetail> booking=new HashSet<BookingDetail>();
-
-/**
- * 
- */
 public Hotel() {
 	super();
 	// TODO Auto-generated constructor stub
 }
+
+public Hotel(int hotelId, String hotelName, String address, String city, String state, int zip, double rate,
+		int rooms) {
+	super();
+	this.hotelId = hotelId;
+	this.hotelName = hotelName;
+	this.address = address;
+	this.city = city;
+	this.state = state;
+	this.zip = zip;
+	this.rate = rate;
+	this.rooms = rooms;
+}
+
+public int getHotelId() {
+	return hotelId;
+}
+
+public void setHotelId(int hotelId) {
+	this.hotelId = hotelId;
+}
+
+public String getHotelName() {
+	return hotelName;
+}
+
+public void setHotelName(String hotelName) {
+	this.hotelName = hotelName;
+}
+
+public String getAddress() {
+	return address;
+}
+
+public void setAddress(String address) {
+	this.address = address;
+}
+
+public String getCity() {
+	return city;
+}
+
+public void setCity(String city) {
+	this.city = city;
+}
+
+public String getState() {
+	return state;
+}
+
+public void setState(String state) {
+	this.state = state;
+}
+
+public int getZip() {
+	return zip;
+}
+
+public void setZip(int zip) {
+	this.zip = zip;
+}
+
+public double getRate() {
+	return rate;
+}
+
+public void setRate(double rate) {
+	this.rate = rate;
+}
+
+public int getRooms() {
+	return rooms;
+}
+
+public void setRooms(int rooms) {
+	this.rooms = rooms;
+}
+
+
+
+
+
+
+
+
 }

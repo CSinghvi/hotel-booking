@@ -5,6 +5,7 @@ package com.mindtree.dao;
 
 import java.util.List;
 
+import com.mindtree.dto.ReservationDetails;
 import com.mindtree.entity.BookingDetail;
 import com.mindtree.entity.Hotel;
 import com.mindtree.exceptions.HotelReservationException;
@@ -22,6 +23,8 @@ public interface HotelReserveDao {
 //	List<Customer> getLoginDetails(LoginDetails loginform);
 
 	List<Hotel> getHotelNameFromDB1(String city);
+	
+	 List<BookingDetail> getOccupancy(ReservationDetails reservationDetail);
 
-	List<BookingDetail> returnResults(String checkIn, String checkOut, int hotelid,int rooms);
+	List<BookingDetail> returnResults(ReservationDetails reservationDetail);
 }

@@ -11,15 +11,20 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mindtree.dto.HotelBookingDto;
+import com.mindtree.dto.LoginDetails;
+import com.mindtree.dto.ReservationDetails;
 import com.mindtree.entity.BookingDetail;
 import com.mindtree.entity.Hotel;
 import com.mindtree.exceptions.HotelReservationException;
@@ -51,13 +56,21 @@ public class HotelReservationControlller {
 	Validations validation=new Validations();
 	LoginValidator loginValidator=new  LoginValidator();
 	
+	public static List<Hotel> hotelDetails1,hotelDetails;
+	
+	public static int occupiedRooms,available;
 	
 	@RequestMapping(method=RequestMethod.GET,value="/fetch.view")
 	public String addQuestionnaire(Model model,HttpServletRequest request) throws HotelReservationException {
-		System.out.println("yaha p toh aa rha H");
+		//System.out.println("yaha p toh aa rha H");
 		String search=request.getParameter("name");
-		List<Hotel> hotelDetails=hotelReserveService.searchHotel(search);
-		model.addAttribute("hotelDetails",hotelDetails);
+		hotelDetails1=hotelReserveService.searchHotel(search);
+		model.addAttribute("hotelDetails",hotelDetails1);
+		LoginDetails login=new LoginDetails();
+		login.setEmail("abc@gmail.com");
+		ReservationDetails details=new ReservationDetails();
+		model.addAttribute("details",details);
+		model.addAttribute("login",login);
 		System.out.println("YHA BHI AA RHA H");
 		return "BookHotel";
 		}
@@ -69,10 +82,10 @@ public class HotelReservationControlller {
 		System.out.println("idhar to aa gaya");
 		 String city=request.getParameter("list");
 		 System.out.println("city name"+city);
-			List<Hotel> hotelDetails=hotelReserveService.getHotel(city);
+			hotelDetails=hotelReserveService.getHotel(city);
 			model.addAttribute("hotelDetails",hotelDetails);
 			System.out.println(hotelDetails.get(0).getHotelName());
-					
+		
 			//"Hotel: <select id='mySelect' name='city'>" 
 			
 			String details= "<option   id=0   value='0' name='hotel'  >Select</option>";
@@ -88,24 +101,75 @@ public class HotelReservationControlller {
 		}
 
 		@RequestMapping(method=RequestMethod.POST,value="/login.view")
-	public String login(HttpServletRequest request,HttpServletResponse response,  Model model) throws HotelReservationException {
+	public String login(@Valid @ModelAttribute("details") ReservationDetails reservationDetails ,BindingResult bindingResult ,HttpServletRequest request,HttpServletResponse response,  Model model) throws HotelReservationException {
+			hotelDetails=hotelReserveService.getHotel(reservationDetails.getCity());
+			int rooms = 0;
+			int occ=0;
 			
-			int rooms=Integer.parseInt(request.getParameter("rooms"));
-			String checkIn=request.getParameter("check_in");		
-			String checkOut=request.getParameter("check_out");
-			int hotelId=Integer.parseInt(request.getParameter("hotel"));
-			System.out.println("Checking hotel "+checkIn);
+			for(int i=0;i<hotelDetails.size();i++)
+			{
+				if(hotelDetails.get(i).getHotelId()==reservationDetails.getHotelId())
+					rooms=hotelDetails.get(i).getRooms();
+			}
+				
+			List<BookingDetail> occupancyList=hotelReserveService.getOccupancy(reservationDetails);
+			
+			if(occupancyList!=null){
+				System.out.println("andhar aa rha h.............................................................................................................."+occupancyList.get(0).getCheckIn());
+				
+				for(int j=0;j<occupancyList.size();j++)
+				{
+					
+					if(occupancyList.get(j).getCheckIn().equals(reservationDetails.getCheckIn()) || occupancyList.get(j).getCheckIn().equals(reservationDetails.getCheckOut()))
+							{
+						System.out.println("1st condition aa rha h.................................................");
+						 occ=occ+occupancyList.get(j).getOccupied();
+						 break;
+							}
+					if(occupancyList.get(j).getCheckOut().equals(reservationDetails.getCheckIn()) || occupancyList.get(j).getCheckOut().equals(reservationDetails.getCheckOut()))
+					{
+						System.out.println("1st condition aa rha h..........................................");
+				 occ=occ+occupancyList.get(j).getOccupied();
+				 break;
+					}			
+					
+				}
+				
+			}
+			
+			System.out.println(occ+"**********************************************************");
+			
+			 available=rooms-occ;
+			 System.out.println(available+"**********************************************************");
+			
+			
+			validation.validate(reservationDetails, bindingResult);
+			if(bindingResult.hasErrors())
+			{
+				model.addAttribute("hotelDetails",hotelDetails1);
+				model.addAttribute("details",reservationDetails);
+				return "BookHotel";
+			}
+			
+			
+//			int rooms=Integer.parseInt(request.getParameter("rooms"));
+//			String checkIn=request.getParameter("check_in");		
+//			String checkOut=request.getParameter("check_out");
+//			int hotelId=Integer.parseInt(request.getParameter("hotel"));
+//			System.out.println("Checking hotel "+checkIn);
 		
-		HotelBookingDto bookingDetails=new HotelBookingDto();
-		 bookingDetails.setCheckIn(checkIn);
-		 bookingDetails.setCheckOut(checkOut);
-		 bookingDetails.setHotelId(hotelId);
-		 bookingDetails.setRooms(rooms);
+//		HotelBookingDto bookingDetails=new HotelBookingDto();
+//		 bookingDetails.setCheckIn(checkIn);
+//		 bookingDetails.setCheckOut(checkOut);
+//		 bookingDetails.setHotelId(hotelId);
+//		 bookingDetails.setRooms(rooms);
+//		 
+//		 System.out.println(bookingDetails);
 		 
-		 System.out.println(bookingDetails);
-		 
-		 List<BookingDetail> reserveList=hotelReserveService.returnResults(checkIn, checkOut, hotelId, rooms);
+		 List<BookingDetail> reserveList=hotelReserveService.returnResults(reservationDetails);
 		
+		 
+		 	
 //			loginValidator.validate(loginform,result);
 //		if(result.hasErrors())
 //		{				

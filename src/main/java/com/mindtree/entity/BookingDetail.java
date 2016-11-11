@@ -15,90 +15,14 @@ import javax.persistence.*;
 @Table(name="booking_details")
 public class BookingDetail {
 
-
-/**
-	 * @return the confirmationNumber
-	 */
-	public int getConfirmationNumber() {
-		return confirmationNumber;
-	}
-	/**
-	 * @param confirmationNumber the confirmationNumber to set
-	 */
-	public void setConfirmationNumber(int confirmationNumber) {
-		this.confirmationNumber = confirmationNumber;
-	}
-	/**
-	 * @return the checkIn
-	 */
-	public String getCheckIn() {
-		return checkIn;
-	}
-	/**
-	 * @param checkIn the checkIn to set
-	 */
-	public void setCheckIn(String checkIn) {
-		this.checkIn = checkIn;
-	}
-	/**
-	 * @return the checkOut
-	 */
-	public String getCheckOut() {
-		return checkOut;
-	}
-	/**
-	 * @param checkOut the checkOut to set
-	 */
-	public void setCheckOut(String checkOut) {
-		this.checkOut = checkOut;
-	}
-	/**
-	 * @return the hotel
-	 */
-	public Hotel getHotel() {
-		return hotel;
-	}
-	/**
-	 * @param hotel the hotel to set
-	 */
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-//	@Override
-//	public String toString() {
-//		return "BookingDetail [confirmationNumber=" + confirmationNumber + ", checkIn=" + checkIn + ", checkOut="
-//				+ checkOut + ", hotel=" + hotel + ", cust=" + cust + "]";
-//	}
-/**
-	 * @param confirmationNumber
-	 * @param checkIn
-	 * @param checkOut
-	 * @param hotel
-	 * @param cust
-	 */
-	public BookingDetail(int confirmationNumber, String checkIn, String checkOut, Hotel hotel) {
-		super();
-		this.confirmationNumber = confirmationNumber;
-		this.checkIn = checkIn;
-		this.checkOut = checkOut;
-		this.hotel = hotel;
-//		this.cust = cust;
-	}
-/**
-	 * 
-	 */
-	public BookingDetail() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
 @Column(name="confirmation_no")
 int confirmationNumber;
+
+@Column(name="occupied")
+int occupied;
+
 @Column(name="check_in")
 String checkIn;
 @Column(name="check_out")
@@ -106,7 +30,75 @@ String checkOut;
 @ManyToOne
 @JoinColumn(name = "hotel_id")
 Hotel hotel;
-//@ManyToOne
-//@JoinColumn(name = "cust_id")
-//Customer cust;
+
+
+public BookingDetail() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+
+public BookingDetail(int confirmationNumber, int occupied, String checkIn, String checkOut, Hotel hotel) {
+	super();
+	this.confirmationNumber = confirmationNumber;
+	this.occupied = occupied;
+	this.checkIn = checkIn;
+	this.checkOut = checkOut;
+	this.hotel = hotel;
+}
+
+
+public int getConfirmationNumber() {
+	return confirmationNumber;
+}
+
+
+public void setConfirmationNumber(int confirmationNumber) {
+	this.confirmationNumber = confirmationNumber;
+}
+
+
+public int getOccupied() {
+	return occupied;
+}
+
+
+public void setOccupied(int occupied) {
+	this.occupied = occupied;
+}
+
+
+public String getCheckIn() {
+	return checkIn;
+}
+
+
+public void setCheckIn(String checkIn) {
+	this.checkIn = checkIn;
+}
+
+
+public String getCheckOut() {
+	return checkOut;
+}
+
+
+public void setCheckOut(String checkOut) {
+	this.checkOut = checkOut;
+}
+
+
+public Hotel getHotel() {
+	return hotel;
+}
+
+
+public void setHotel(Hotel hotel) {
+	this.hotel = hotel;
+}
+
+
+
+
+
 }

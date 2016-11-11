@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -12,10 +13,16 @@
 </head>
 <body>
 
-<form action="login.view" id="form"  name="myform"  method="post">
+<br>
+<%-- <c:forEach items="${login}" var="info"> --%>
+<c:out value="${login.getEmail()}"></c:out>
+<%-- </c:forEach> --%>
 
 
-City: <select id="mySelect" name="choose"  onchange="myfunction()" > 
+<form:form action="login.view" id="form"  name="myform"  method="post" commandName="details">
+
+
+City: <form:select id="mySelect" name="choose" path="city" onchange="myfunction()" > 
 <option   id=0   value="0"  >Select</option>
 
 <c:forEach items="${hotelDetails}" var="city">
@@ -24,7 +31,7 @@ City: <select id="mySelect" name="choose"  onchange="myfunction()" >
 </option>
 </c:forEach>
 
-</select>
+</form:select>
 
 <script>
 function myfunction(){
@@ -44,26 +51,38 @@ function myfunction(){
 
 <br><br><br>  
 <div id="div2">
-Hotel :<select id="demo" name="hotel">
-</select>
+Hotel :<form:select id="demo" name="hotel" path="hotelId">
+</form:select>
 </div>
 
 <br>
-  <p>check-in Date :<input type="date" name="check_in" ></p>
+<!--   <p>check-in Date :<input  type="date" name="check_in" ></p> -->
  
- <br>
-  <p>check-out Date :<input type="date" name="check_out" ></p>      
+<!--  <br> -->
+<!--   <p>check-out Date :<input type="date" name="check_out" ></p>       -->
+   
+  <br><br>
+Check-In<form:input path="checkIn" />
+<br><br>
+<form:errors path="checkIn" style="color:red"></form:errors>
+<br><br>
+Check-Out<form:input path="checkOut" />
+<br><br>
+<form:errors path="checkOut" style="color:red"></form:errors>
+<br><br>
+<form:errors path="invalidDate" style="color:red"></form:errors>
+<br><br> 
    
    	
 <br>
-<p>Number of rooms : <input type="number" name="rooms"></p>	
-	
-	<br><br> <input type="submit" value="Submit">  
+<p>Number of rooms : <form:input type="number" path="room" name="rooms" /> </p>	
+<br>
+<form:errors path="room" style="color:red"></form:errors>	
+	<br><input type="submit" value="Submit">  
 	 <a href="index.jsp"><button type="button">cancel</button></a> 
 
 <input type="reset" value="clear"> 
-</form>
-
+</form:form>
 
 
   
