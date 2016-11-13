@@ -18,13 +18,13 @@ import com.mindtree.exceptions.HotelReservationException;
  */
 public interface HotelReserveDao {
 	
-	List<Hotel> getHotelNameFromDB(String search) throws HotelReservationException;
-
-//	List<Customer> getLoginDetails(LoginDetails loginform);
+	List<Hotel> getHotelNameFromDB() throws HotelReservationException;
 
 	List<Hotel> getHotelNameFromDB1(String city);
 	
 	 List<BookingDetail> getOccupancy(ReservationDetails reservationDetail);
 
 	List<BookingDetail> returnResults(ReservationDetails reservationDetail);
+	
+	List<Hotel> getLowestfareHotels(String city);
 }

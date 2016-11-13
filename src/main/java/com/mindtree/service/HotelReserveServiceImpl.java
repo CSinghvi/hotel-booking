@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mindtree.dao.HotelReserveDao;
@@ -24,7 +23,7 @@ import com.mindtree.exceptions.HotelReservationException;
 public class HotelReserveServiceImpl implements HotelReserveService {
 
 	@Autowired
-		//EmployeeSurveyDAOImpl dao;
+		
 	private HotelReserveDao hotelReserveDao;
 	
 
@@ -41,12 +40,13 @@ public class HotelReserveServiceImpl implements HotelReserveService {
 	public void setHotelReserveDao(HotelReserveDao hotelReserveDao) {
 		this.hotelReserveDao = hotelReserveDao;
 	}
+	
 
 	@Transactional
-		public List<Hotel> searchHotel(String search) throws HotelReservationException {
+		public List<Hotel> searchHotel() throws HotelReservationException {
 		try
 		{
-			List<Hotel> city=hotelReserveDao.getHotelNameFromDB(search);
+			List<Hotel> city=hotelReserveDao.getHotelNameFromDB();
 			return city;
 		}
 		catch(Exception e)
@@ -56,13 +56,7 @@ public class HotelReserveServiceImpl implements HotelReserveService {
 		}
 		
 	}
-	
-//	@Transactional
-//		public List<Customer> getLoginDetails(LoginDetails loginform) {
-//			System.out.println("reaching service");
-//			List<Customer> custDetails=hotelReserveDao.getLoginDetails(loginform);
-//			return custDetails;
-//		}
+
 
 	@Transactional
 		public List<Hotel> getHotel(String city) throws HotelReservationException {
@@ -87,6 +81,13 @@ public class HotelReserveServiceImpl implements HotelReserveService {
 			return reserveList;
 		}
 	
+	@Transactional
+	public List<Hotel> getLowestfareHotels(String city) {
+
+		List<Hotel> hotelDetails=hotelReserveDao.getLowestfareHotels(city);
+		return hotelDetails;
+	}
+
 	
 
 }

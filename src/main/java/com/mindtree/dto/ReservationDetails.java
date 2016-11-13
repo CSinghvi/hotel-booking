@@ -23,8 +23,7 @@ String invalidDate;
 
 public ReservationDetails() {
 	super();
-	// TODO Auto-generated constructor stub
-}
+	}
 
 public ReservationDetails(int hotelId, int room, String checkIn, String checkOut, String city, String invalidDate) {
 	super();

@@ -70,11 +70,12 @@ public void setData()
 	/**
 	 * Test method for {@link com.mindtree.service.HotelReserveServiceImpl#returnResults(java.lang.String, java.lang.String, int, java.lang.String)}.
 	 */
-	@Test
-	@Transactional
-	public void testReturnResults() {
-		BookingDetail bookingDetail=hotelReserveDao.returnResults("24-03-2016","26-03-2016", 2, "chirayu.singhvi@mindtree.com").get(0);
-		Assert.assertEquals("Marriot Downtown", bookingDetail.getHotel().getHotelName());
-	}
+//	@Test
+//	@Transactional
+//	public void testReturnResults() {
+//		BookingDetail bookingDetail=hotelReserveDao.returnResults("24-03-2016","26-03-2016", 2, "chirayu.singhvi@mindtree.com").get(0);
+//		Assert.assertEquals("Marriot Downtown", bookingDetail.getHotel().getHotelName());
+//	}
+	
 
 }

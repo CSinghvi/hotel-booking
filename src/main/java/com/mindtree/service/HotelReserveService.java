@@ -15,12 +15,13 @@ import com.mindtree.exceptions.HotelReservationException;
  *
  */
 public interface HotelReserveService {
-	public List<Hotel> searchHotel(String search) throws HotelReservationException;
+	public List<Hotel> searchHotel() throws HotelReservationException;
 
-//	public List<Customer> getLoginDetails(LoginDetails loginform);
 	public List<Hotel> getHotel(String city) throws HotelReservationException;
 
 	public List<BookingDetail> getOccupancy(ReservationDetails reservationDetail);
 	
 	public List<BookingDetail> returnResults(ReservationDetails reservationDetail);
+	
+	public List<Hotel> getLowestfareHotels(String city);
 }

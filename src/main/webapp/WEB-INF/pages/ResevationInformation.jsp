@@ -55,7 +55,8 @@ Amount Payable is INR :<c:out value="${list.getHotel().getRate()}"></c:out>
 <tr><td>Check in Date</td><td>:<c:out value="${list.getCheckIn()}"></c:out></td></tr>
 <tr><td>Check out Date</td><td>:<c:out value="${list.getCheckOut()}"></c:out></td></tr>
 </table>
-
+<br><br>
+<a href="index.jsp">Back to Home</a>
 
 <%-- Email : <c:out value="${list.getEmail()}"></c:out> --%>
 </c:forEach>

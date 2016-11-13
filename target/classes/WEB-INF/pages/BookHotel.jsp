@@ -13,11 +13,6 @@
 </head>
 <body>
 
-<br>
-<%-- <c:forEach items="${login}" var="info"> --%>
-<c:out value="${login.getEmail()}"></c:out>
-<%-- </c:forEach> --%>
-
 
 <form:form action="login.view" id="form"  name="myform"  method="post" commandName="details">
 
@@ -32,7 +27,7 @@ City: <form:select id="mySelect" name="choose" path="city" onchange="myfunction(
 </c:forEach>
 
 </form:select>
-
+<form:errors path="city" style="color:red"></form:errors>	
 <script>
 function myfunction(){
 	var x = document.getElementById("mySelect").value;
@@ -49,29 +44,31 @@ function myfunction(){
 </script>
 
 
-<br><br><br>  
+<br><br> 
 <div id="div2">
 Hotel :<form:select id="demo" name="hotel" path="hotelId">
 </form:select>
+<form:errors path="hotelId" style=
+"color:red"></form:errors>	
 </div>
 
-<br>
+
 <!--   <p>check-in Date :<input  type="date" name="check_in" ></p> -->
  
 <!--  <br> -->
 <!--   <p>check-out Date :<input type="date" name="check_out" ></p>       -->
    
-  <br><br>
+  <br>
 Check-In<form:input path="checkIn" />
-<br><br>
+<br>
 <form:errors path="checkIn" style="color:red"></form:errors>
-<br><br>
+<br>
 Check-Out<form:input path="checkOut" />
-<br><br>
+<br>
 <form:errors path="checkOut" style="color:red"></form:errors>
-<br><br>
+<br>
 <form:errors path="invalidDate" style="color:red"></form:errors>
-<br><br> 
+
    
    	
 <br>
@@ -81,7 +78,7 @@ Check-Out<form:input path="checkOut" />
 	<br><input type="submit" value="Submit">  
 	 <a href="index.jsp"><button type="button">cancel</button></a> 
 
-<input type="reset" value="clear"> 
+
 </form:form>
 
 

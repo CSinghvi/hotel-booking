@@ -4,17 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Hotel Rservation</title>
+<title>Hotel Reservation</title>
 </head>
 <body>
 <h1>Welcome to Hotel booking application</h1>
-<br>
-<a href="search.view">search hotels</a><br><br>
+
 
 <br>
 <a href="fetch.view">Book a room</a><br><br>
 <br>
-<a href="search.view"></a><br><br>
+<a href="lowest.view">View Lowest Priced Hotels</a><br><br>
 
 
 </body>
