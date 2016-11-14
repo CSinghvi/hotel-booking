@@ -29,7 +29,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
        <bean id="transactionManager"
               class="org.springframework.orm.hibernate4.HibernateTransactionManager">
               <property name="sessionFactory" ref="sessionFactory" />
-<!--               <property name="dataSource" ref="dataSource"></property> -->
+
        </bean>
 
        <bean id="sessionFactory"
@@ -39,7 +39,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
               <property name="annotatedClasses">
                      <list>
                             <value>com.mindtree.entity.BookingDetail</value>
-<!--                             <value>com.mindtree.entity.Customer</value> -->
+
                               <value>com.mindtree.entity.Hotel</value>
                      </list>
               </property>
@@ -63,30 +63,5 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 <property name="hotelReserveDao" ref="hotelReserveDao"></property>
    </bean>  
        
-<!--        <bean id="employeeDepartmentAspect" class="com.mindtree.aspect.EmployeeDepartmentPoincut" /> -->
 
-<!--        <bean id="messageSource" -->
-<!--               class="org.springframework.context.support.ReloadableResourceBundleMessageSource"> -->
-<!--               <property name="basename" value="classpath:messages" /> -->
-<!--               <property name="defaultEncoding" value="UTF-8" /> -->
-<!--        </bean> -->
-<!--        <bean id="localeResolver" -->
-<!--               class="org.springframework.web.servlet.i18n.CookieLocaleResolver"> -->
-<!--               <property name="defaultLocale" value="en" /> -->
-<!--        </bean> -->
-
-<!--        <bean id="localeChangeInterceptor" -->
-<!--               class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"> -->
-<!--               <property name="paramName" value="language" /> -->
-<!--        </bean> -->
-<!--        <bean id="handlerMapping" -->
-<!--               class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"> -->
-<!--               <property name="interceptors"> -->
-<!--                      <ref bean="localeChangeInterceptor" /> -->
-<!--               </property> -->
-<!--        </bean> -->
-
-
-<!--        <bean id="persistenceExceptionTranslationPostProcessor" -->
-<!--               class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" /> -->
 </beans>
