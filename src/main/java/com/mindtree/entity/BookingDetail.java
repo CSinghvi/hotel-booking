@@ -23,6 +23,9 @@ int confirmationNumber;
 @Column(name="occupied")
 int occupied;
 
+@Column(name="bill")
+double bill;
+
 @Column(name="check_in")
 String checkIn;
 @Column(name="check_out")
@@ -38,10 +41,11 @@ public BookingDetail() {
 }
 
 
-public BookingDetail(int confirmationNumber, int occupied, String checkIn, String checkOut, Hotel hotel) {
+public BookingDetail(int confirmationNumber, int occupied, double bill, String checkIn, String checkOut, Hotel hotel) {
 	super();
 	this.confirmationNumber = confirmationNumber;
 	this.occupied = occupied;
+	this.bill = bill;
 	this.checkIn = checkIn;
 	this.checkOut = checkOut;
 	this.hotel = hotel;
@@ -65,6 +69,16 @@ public int getOccupied() {
 
 public void setOccupied(int occupied) {
 	this.occupied = occupied;
+}
+
+
+public double getBill() {
+	return bill;
+}
+
+
+public void setBill(double bill) {
+	this.bill = bill;
 }
 
 
@@ -96,7 +110,6 @@ public Hotel getHotel() {
 public void setHotel(Hotel hotel) {
 	this.hotel = hotel;
 }
-
 
 
 

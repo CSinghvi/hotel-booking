@@ -53,8 +53,14 @@ public class HotelReservationControlller {
 
 	public static int occupiedRooms, available;
 
+	/**fetch city name from database and returns to BookHOTEL.JSP
+	 * @param model
+	 * @param request
+	 * @return BookHotel
+	 * @throws HotelReservationException
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch.view")
-	public String addQuestionnaire(Model model, HttpServletRequest request) throws HotelReservationException {
+	public String getCity(Model model, HttpServletRequest request) throws HotelReservationException {
 		hotelDetails1 = hotelReserveService.searchHotel();
 		model.addAttribute("hotelDetails", hotelDetails1);
 		ReservationDetails details = new ReservationDetails();
@@ -62,17 +68,21 @@ public class HotelReservationControlller {
 		return "BookHotel";
 	}
 
+	/**AJax call for getting hotels of selected city
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return string details
+	 * @throws HotelReservationException
+	 * @throws IOException
+	 */
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET, value = "/getHotelName.view")
-	public String printhotelname(Model model, HttpServletRequest request, HttpServletResponse response)
+	public String getHotelname(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws HotelReservationException, IOException {
-		System.out.println("idhar to aa gaya");
 		String city = request.getParameter("list");
-		System.out.println("city name" + city);
 		hotelDetails = hotelReserveService.getHotel(city);
 		model.addAttribute("hotelDetails", hotelDetails);
-		System.out.println(hotelDetails.get(0).getHotelName());
-
 		
 		String details = "<option   id=0   value='0' name='hotel'  >Select</option>";
 
@@ -80,12 +90,21 @@ public class HotelReservationControlller {
 			details = details + "<option   id=" + i + "   value=" + hotelDetails.get(i).getHotelId() + " name='hotel' >"
 					+ hotelDetails.get(i).getHotelName() + "</option>";
 		}
-
 		return details;
 	}
 
+	/**All booking details entered by users is processed here
+	 * and result is shown on ResevationInformation.jsp
+	 * @param reservationDetails
+	 * @param bindingResult
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return ReservationInformation
+	 * @throws HotelReservationException
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/login.view")
-	public String login(@Valid @ModelAttribute("details") ReservationDetails reservationDetails,
+	public String getBookingDetails(@Valid @ModelAttribute("details") ReservationDetails reservationDetails,
 			BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, Model model)
 			throws HotelReservationException {
 		hotelDetails = hotelReserveService.getHotel(reservationDetails.getCity());
@@ -96,36 +115,24 @@ public class HotelReservationControlller {
 			if (hotelDetails.get(i).getHotelId() == reservationDetails.getHotelId())
 				rooms = hotelDetails.get(i).getRooms();
 		}
-
 		List<BookingDetail> occupancyList = hotelReserveService.getOccupancy(reservationDetails);
-
 		if (occupancyList != null) {
-			System.out.println(
-					"andhar aa rha h..............................................................................................................");
-
-			for (int j = 0; j < occupancyList.size(); j++) {
+						for (int j = 0; j < occupancyList.size(); j++) {
 
 				if ((occupancyList.get(j).getCheckIn().equals(reservationDetails.getCheckIn())
 						|| occupancyList.get(j).getCheckIn().equals(reservationDetails.getCheckOut()))
 						|| (occupancyList.get(j).getCheckOut().equals(reservationDetails.getCheckIn())
 								|| occupancyList.get(j).getCheckOut().equals(reservationDetails.getCheckOut()))) {
-					System.out.println("1st condition aa rha h.................................................");
 					occ = occ + occupancyList.get(j).getOccupied();
 					break;
 				}
-
 			}
-
 		}
-		System.out.println(rooms + " Rooms**********************************************************");
-
 		occupiedRooms = occupiedRooms + occ;
-		System.out.println(occupiedRooms + " occupiedRooms**********************************************************");
-
 		available = rooms - occ;
-		System.out.println(available + " available **********************************************************");
-
 		validation.validate(reservationDetails, bindingResult);
+		
+		//If there is any error it will redirect again to BookHotel.jsp
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("hotelDetails", hotelDetails1);
 			model.addAttribute("details", reservationDetails);
@@ -133,46 +140,50 @@ public class HotelReservationControlller {
 		}
 
 		List<BookingDetail> reserveList = hotelReserveService.returnResults(reservationDetails);
-
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date day = new Date();
 		String date = dateFormat.format(day);
-
 		model.addAttribute("reserveList", reserveList);
 		model.addAttribute("date", date);
-
 		return "ResevationInformation";
 	}
 
+	
+	/**2nd usecase for getting city name and redirecting to LowestPricedHotels.jsp
+	 * @param model
+	 * @param request
+	 * @return
+	 * @throws HotelReservationException
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/lowest.view")
 	public String lowestFare(Model model, HttpServletRequest request) throws HotelReservationException {
-
 		hotelDetails = hotelReserveService.searchHotel();
 		model.addAttribute("hotelDetails", hotelDetails);
-
-		System.out.println("YHA BHI AA RHA H");
 		return "LowestPricedHotels";
 	}
 
+	
+	/**Ajax call, 5 hotels with lowest price is fetched from database of a selected city
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws HotelReservationException
+	 * @throws IOException
+	 */
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET, value = "/getlowestHotel.view")
 	public String getlowestHotel(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws HotelReservationException, IOException {
-		System.out.println("idhar to aa gaya");
 		String city = request.getParameter("list");
-		System.out.println("city name" + city);
 		hotelDetails = hotelReserveService.getLowestfareHotels(city);
 		model.addAttribute("hotelDetails", hotelDetails);
-		System.out.println(hotelDetails.get(0).getHotelName());
-
 		String details = "<table border='1' ><tr><td>Hotel Name</td><td>Rate(INR)</td</tr>";
-
 		for (int i = 0; i < hotelDetails.size(); i++) {
 			details = details + "<tr><td>" + hotelDetails.get(i).getHotelName() + " </td><td>"
 					+ hotelDetails.get(i).getRate() + "</td></tr>";
 		}
 		details = details + "</table>";
-
 		return details;
 	}
 

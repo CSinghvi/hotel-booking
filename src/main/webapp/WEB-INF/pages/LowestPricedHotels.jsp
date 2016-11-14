@@ -5,9 +5,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Lowest Priced hotels</title>
+<style>
+body{
+   content: "";
+   position:absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background-image: url("./Image/activity.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 5;
+/*     filter:alpha(opacity=90); */
+    height:100%;
+    width:100%;
+    float:top;
+       font-weight: bolder;
+    font-family:monospace;
+ }
+</style>
 </head>
 <body>
+<div style="position:absolute; margin-left:5%;top:10%;">
 City: <select id="mySelect" name="choose" onchange="myfunction()" > 
 <option   id=0   value="0"  >Select</option>
 
@@ -40,5 +62,6 @@ function myfunction(){
 
 <br>
 <a href="index.jsp"><button type="button">Return to Home Page</button></a> 
+</div>
 </body>
 </html>

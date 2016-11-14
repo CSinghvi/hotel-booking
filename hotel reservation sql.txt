@@ -5,7 +5,7 @@ use hotel201;
 create table hotels (
 hotel_id int primary key auto_increment not null,
 hotel_name varchar(30) not null,
-address varchar(50) not null,
+address varchar(100) not null,
 city varchar(20) not null,
 state varchar(20),
 zip int,
@@ -28,11 +28,29 @@ drop procedure if exists insert_hotels //
 create procedure insert_hotels()
 begin
 Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
-values('lake palace', 'bnhfhj ghjhj', 'udaipur', 'rajastan', 313002,4500,10);
+values('Taj Lake Palace Hotel', 'P O Box 5, Lake Pichola', 'Udaipur', 'Rajasthan',313001,700000,83);
 Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
-values('udai vilas', 'bnhfhj ghjhj mbh', 'udaipur', 'rajastan', 313002,5500,12);
+values('Devi Garh', 'Delwara, NH-8, District Rajsamand', 'Udaipur', 'Rajasthan',313202,26500,39);
 Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
-values('pelican', 'bnhfhj ghjkjjhj', 'jodhpur', 'punjab', 313003,3500,14);
+values('Fateh Prakash Palace', 'The City Palace Complex', 'Udaipur', 'Rajasthan',313001,25000,66);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Garden Hotel', 'Opposite Sajjan Niwas Garden, Gulab Bagh Road', 'Udaipur', 'Rajasthan',313001,6000,29);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Heritage Resorts', 'Lake Bagela, Nagda, Eklingji', 'Udaipur', 'Rajasthan',313002,7000,27);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Hotel Fountain', '2, Sukhadia Circle', 'Udaipur', 'Rajasthan',313001,1200,30);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Airlines Hotel','4, Madras Bank Road','Bangalore','Karnataka',560001,1500,39);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Anand Bhavan Lodging','Anand Bhavan Building, Devatha Market, Chickpet, Opposite Sangeetha Tower','Bangalore','Karnataka',560053,1200,12);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Bombay Ananda Bhavan Hotel','10, Grant Road, Vittal Mallya Road','Bangalore','Karnataka',560001,2000,12);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Holiday Village','35, 9th Mile, Vajrahalli Village, Kanakapura Road','Bangalore','Karnataka',560062,3500,10);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Hotel Ajantha','22-A, Mahatma Gandhi Road','Bangalore','Karnataka',560001,2400,61);
+Insert into hotels (hotel_name,address,city,state,zip,rate,rooms)
+values('Hotel City Towers','29, 2nd Main Road, Kalasipalyam','Bangalore','Karnataka',560002,1400,40);
 end
 //
 delimiter ;

@@ -79,10 +79,14 @@ public class HotelReserveDaoImpl implements HotelReserveDao {
 		int hotelid = reservationDetail.getHotelId();
 		Session session = sessionFactory.openSession();
 		Hotel hotel = (Hotel) session.createQuery("FROM Hotel h where h.hotelId=" + hotelid).uniqueResult();
+		
+		double bill=hotel.getRate()*1*reservationDetail.getRoom();
+		
 		BookingDetail book = new BookingDetail();
 		book.setCheckIn(reservationDetail.getCheckIn());
 		book.setCheckOut(reservationDetail.getCheckOut());
 		book.setOccupied(reservationDetail.getRoom());
+		book.setBill(bill);
 		book.setHotel(hotel);
 		session.save(book);
 		@SuppressWarnings("unused")

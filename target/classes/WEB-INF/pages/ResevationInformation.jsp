@@ -15,38 +15,47 @@ th,td
 {
 padding:10px; 
 }
+
+body{
+   content: "";
+   position:absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background-image: url("./Image/activity.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.7;
+/*     filter:alpha(opacity=90); */
+    height:100%;
+    width:100%;
+    float:top;
+    font-weight: bolder;
+    font-family:inherit;
+ }
+ 
+ #demo{
+ width:140px;   
+}
+
+ #mySelect{
+ width:140px;   
+}
 </style>
 </head>
 <body>
-
+<div style="position:absolute; margin-left:5%;top:0%;">
 Booked on &nbsp; <c:out value="${date}"></c:out>
 <br><br><br>
-<!-- <table border="1" style="padding:2px; "> -->
-<!-- <tr> -->
-<!-- <th>Hotel Name</th> -->
-<!-- <th>Address</th> -->
-<!-- <th>City,State</th> -->
-<!-- <th>Check in Date</th> -->
-<!-- <th>Check Out Date</th> -->
-<!-- <th>Confirmation number</th> -->
-<!-- </tr> -->
-<!-- </table> -->
+
 <c:forEach items="${reserveList}" var="list">
-<!-- <table border="1" style="padding:2px; "> -->
-<!-- <tr> -->
-<%-- <td><c:out value="${list.getHotel().getHotelName()}"></c:out></td> --%>
-<%-- <td><c:out value="${list.getHotel().getAddress()}"></c:out></td> --%>
-<%-- <td>${list.getHotel().getCity()},${list.getHotel().getState()}</td> --%>
-<%-- <td><c:out value="${list.getCheckIn()}"></c:out></td> --%>
-<%-- <td><c:out value="${list.getCheckOut()}"></c:out></td> --%>
-<%-- <td><c:out value="${list.getConfirmationNumber()}"></c:out></td> --%>
-<%-- <td><c:out value="${list.getHotel().getRate()}"></c:out></td> --%>
-<!-- </tr> -->
-<!-- </table> -->
+
 
 Your Hotel Booking order id is &nbsp; <c:out value="${list.getConfirmationNumber()}"></c:out>
 <br><br><br>
-Amount Payable is INR :<c:out value="${list.getHotel().getRate()}"></c:out>
+Amount Payable is INR :<c:out value="${list.getBill()}"></c:out>
 <br><br>
 <table style="padding:2px; ">
 <tr><td>Number of rooms Booked</td><td>:<c:out value="${list.getOccupied()}"></c:out></td></tr>
@@ -58,7 +67,8 @@ Amount Payable is INR :<c:out value="${list.getHotel().getRate()}"></c:out>
 <br><br>
 <a href="index.jsp">Back to Home</a>
 
-<%-- Email : <c:out value="${list.getEmail()}"></c:out> --%>
+
 </c:forEach>
+</div>
 </body>
 </html>

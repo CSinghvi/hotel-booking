@@ -9,15 +9,42 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Book Hotel</title>
+<style>
+body{
+   content: "";
+   position:absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background-image: url("./Image/Booking.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.7;
+/*     filter:alpha(opacity=90); */
+    height:100%;
+    width:100%;
+    float:top;
+ }
+ 
+ #demo{
+ width:140px;   
+}
 
+ #mySelect{
+ width:140px;   
+}
+ </style>
 </head>
 <body>
-
+<div style="position:absolute; margin-left:5%;top:0%;">
 
 <form:form action="login.view" id="form"  name="myform"  method="post" commandName="details">
 
-
-City: <form:select id="mySelect" name="choose" path="city" onchange="myfunction()" > 
+<table>
+<tr>
+<td>City:</td><td> <form:select id="mySelect" name="choose" path="city" onchange="myfunction()" > 
 <option   id=0   value="0"  >Select</option>
 
 <c:forEach items="${hotelDetails}" var="city">
@@ -26,8 +53,9 @@ City: <form:select id="mySelect" name="choose" path="city" onchange="myfunction(
 </option>
 </c:forEach>
 
-</form:select>
-<form:errors path="city" style="color:red"></form:errors>	
+</form:select ></td></tr>
+<tr>
+<td></td><td><form:errors path="city" style="color:red"></form:errors></td></tr>	
 <script>
 function myfunction(){
 	var x = document.getElementById("mySelect").value;
@@ -46,8 +74,9 @@ function myfunction(){
 
 <br><br> 
 <div id="div2">
-Hotel :<form:select id="demo" name="hotel" path="hotelId">
-</form:select>
+<tr><td>
+Hotel :</td><td><form:select id="demo" name="hotel" path="hotelId">
+</form:select></td></tr>
 <form:errors path="hotelId" style=
 "color:red"></form:errors>	
 </div>
@@ -59,35 +88,31 @@ Hotel :<form:select id="demo" name="hotel" path="hotelId">
 <!--   <p>check-out Date :<input type="date" name="check_out" ></p>       -->
    
   <br>
-Check-In<form:input path="checkIn" />
+<tr><td>Check-In:</td><td><form:input path="checkIn" /><td>
 <br>
-<form:errors path="checkIn" style="color:red"></form:errors>
+<tr><td></td><td><form:errors path="checkIn" style="color:red"></form:errors></td></tr>
 <br>
-Check-Out<form:input path="checkOut" />
+<tr><td>Check-Out:</td><td><form:input path="checkOut" /></td></tr>
 <br>
-<form:errors path="checkOut" style="color:red"></form:errors>
+<tr><td></td><td><form:errors path="checkOut" style="color:red"></form:errors></td></tr>
 <br>
-<form:errors path="invalidDate" style="color:red"></form:errors>
+<tr><td></td><td><form:errors path="invalidDate" style="color:red"></form:errors></td></tr>
 
    
    	
 <br>
-<p>Number of rooms : <form:input type="number" path="room" name="rooms" /> </p>	
+<tr><td>Number of rooms :</td><td> <form:input type="number" path="room" name="rooms" /></td></tr>
 <br>
-<form:errors path="room" style="color:red"></form:errors>	
-	<br><input type="submit" value="Submit">  
-	 <a href="index.jsp"><button type="button">cancel</button></a> 
+<tr><td></td><td><form:errors path="room" style="color:red"></form:errors></td></tr>	
+<tr><td><input type="submit" value="Submit"> </td><td> 
+	 <a href="index.jsp"><button type="button">cancel</button></a></td> 
 
 
+</table>
 </form:form>
 
 
-  
-
-
-
-
-
+</div>
 
 
 </body>
